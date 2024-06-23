@@ -1,0 +1,130 @@
+﻿@model MVC_Demo.Models.CustomerModel
+
+@*in the beginform content is written for the file upload*@
+@using (Html.BeginForm("AddEmployee", "Customer", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <h4>CustomerModel</h4>
+    @if (TempData["UpdateMessage"] != null)
+    {
+        <div class="alert alert-success">
+            <strong>Success:</strong> @TempData["UpdateMessage"]
+            <button type="button" class="close" data-dismiss="alert" area-label="close">
+                <span>&times;</span>
+            </button>
+        </div>
+    }
+
+    else if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">
+            <strong>Error:</strong> @TempData["Error"]
+            <button type="button" class="close" data-dismiss="alert" area-label="close">
+                <span>&times;</span>
+            </button>
+        </div>
+    }
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.ID)
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Firstname, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Firstname, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Firstname, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Lastname, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Lastname, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Lastname, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Age, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Age, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Age, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Birthdate, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Birthdate, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Birthdate, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.State, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.State, new List<SelectListItem>
+                {
+                new SelectListItem { Text = "Alabama", Value = "AL" },
+                new SelectListItem { Text = "Alaska", Value = "AK" },
+                new SelectListItem { Text = "Arizona", Value = "AZ" },
+                new SelectListItem { Text = "Arkansas", Value = "AR" },
+                new SelectListItem { Text = "California", Value = "CA" },
+                new SelectListItem { Text = "Colorado", Value = "CO" },
+                new SelectListItem { Text = "Connecticut", Value = "CT" }
+             }, "Select a state", new { @class = "form-control" })
+
+            @Html.ValidationMessageFor(model => model.State, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Gender, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <table>
+                <tr>
+                    <td>
+                        <div class="radio">
+                            <label>
+                                @Html.RadioButtonFor(model => model.Gender, "Male") Male
+                            </label>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="radio">
+                            <label>
+                                @Html.RadioButtonFor(model => model.Gender, "Female") Female
+                            </label>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="radio">
+                            <label>
+                                @Html.RadioButtonFor(model => model.Gender, "Other") Other
+                            </label>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    @*this is for the file upload*@
+    <div class="form-group">
+        @Html.LabelFor(model => model.Photo, htmlAttributes: new { @class = "control-label col-md-2" })
+
+        <input type="file" name="productImage" />
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "GetAllEmpDetails")
+</div>
